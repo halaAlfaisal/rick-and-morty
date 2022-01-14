@@ -3,10 +3,11 @@ import PageTitle from "../Components/PageTitle";
 import CharacterCard from "../Components/CharcterCard";
 import { useCharacter } from "../useRequest";
 import { GET_CHARACTERS } from "../graphql";
-import { Grid } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 
 const CharachterList: React.FC<{ characters: MinifiedCharacter[] }> = ({characters}) => (
-    <Grid container spacing={1}>
+  <Container maxWidth="lg">
+    <Grid container spacing={1} sx={{justifyContent: "center"}}>
       {characters.map((character) => (
         <Grid item key={character.name}>
           <CharacterCard
@@ -17,6 +18,7 @@ const CharachterList: React.FC<{ characters: MinifiedCharacter[] }> = ({characte
         </Grid>
       ))}
     </Grid>
+  </Container>
 );
 const MainPage: React.FC = () => {
   const { loading, data } = useCharacter(GET_CHARACTERS);
