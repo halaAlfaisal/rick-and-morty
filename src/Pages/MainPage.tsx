@@ -8,11 +8,11 @@ import { Grid } from "@mui/material";
 const CharachterList: React.FC<{ characters: MinifiedCharacter[] }> = ({characters}) => (
     <Grid container spacing={1}>
       {characters.map((character) => (
-        <Grid item>
+        <Grid item key={character.name}>
           <CharacterCard
-            key={character.name}
             image={character.image}
             name={character.name}
+            id={character.id}
           />
         </Grid>
       ))}
@@ -20,14 +20,12 @@ const CharachterList: React.FC<{ characters: MinifiedCharacter[] }> = ({characte
 );
 const MainPage: React.FC = () => {
   const { loading, data } = useCharacter(GET_CHARACTERS);
-  console.log(data, "data");
   if (loading || !data) return <></>;
-
   const results = data.characters.results;
-  console.log(results, "results");
+
   return (
     <div>
-      <PageTitle title="Rick and Morty!" />
+      <PageTitle title="Rick and Morty" />
       <CharachterList characters={results} />
     </div>
   );

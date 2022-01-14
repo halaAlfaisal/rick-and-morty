@@ -7,6 +7,7 @@ type MinifiedCharacterResults = {
 type MinifiedCharacter = {
   name: string;
   image: string;
+  id: string;
 };
 
 type Charachter = {
