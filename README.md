@@ -1,8 +1,8 @@
 ## How to run:
 
-1- Clone this repo
-2- Run `yarn` to download dependencies (node_modules)
-3- Run `yarn start` in bash and the app will open in the browser [http://localhost:3000].
+1- Clone this repo.  
+2- Run `yarn` in bash to download dependencies (node_modules).   
+3- Run `yarn start` in bash and the app will open in the browser [http://localhost:3000].  
 
 ### `yarn start`
 
