@@ -35,10 +35,10 @@ const DetailsPage: React.FC = () => {
 
   const result = data.character;
   const episodes_appearance = result.episode.length;
-  const tot_residents_in_last_seen = result.location.residents.length;
+  const tot_residents_in_last_seen = result.location ? (result.location.residents || []).length : 0;
   const n = tot_residents_in_last_seen > 4 ? 4 : tot_residents_in_last_seen;
-  const residents_of_last_location = result.location.residents.filter((x) => x.name !== result.name).slice(0, n);
-
+  const residents_of_last_location = result.location ? result.location.residents.filter((x) => x.name !== result.name).slice(0, n) : [];
+  
   return (
     <ThemeProvider theme={darkTheme}>
       <Container maxWidth="lg">
@@ -65,18 +65,18 @@ const DetailsPage: React.FC = () => {
                   <Typography variant="subtitle1" color="text.secondary" component="div">
                     Appeared in {episodes_appearance} episodes
                   </Typography>
-                  <Typography variant="subtitle1" color="text.secondary" component="div">
+                  {result.origin && <Typography variant="subtitle1" color="text.secondary" component="div">
                     Origin {result.origin.name} type {result.origin.type}
-                  </Typography>
-                  <Typography variant="subtitle1" color="text.secondary" component="div">
+                  </Typography>}
+                  {result.location && <Typography variant="subtitle1" color="text.secondary" component="div">
                     Last seen in {result.location.name} in {result.location.dimension} dimension.
-                  </Typography>
+                  </Typography>}
                   <Typography variant="subtitle1" color="text.secondary" component="div">
                     Residents in the last seen location:
                   </Typography>
                   <AvatarGroup total={tot_residents_in_last_seen} sx={{ justifyContent: "start" }}>
                     {residents_of_last_location.map((x) => (
-                      <Avatar alt={x.name} src={x.image} />
+                      <Avatar key={x.name} alt={x.name} src={x.image} />
                     ))}
                   </AvatarGroup>
                 </CardContent>
