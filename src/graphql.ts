@@ -27,7 +27,6 @@ query GetCharacter($id: ID!){
       residents{
         name
       }
-      created
     }
     location{
       name
@@ -35,20 +34,18 @@ query GetCharacter($id: ID!){
       dimension
       residents{
         name
+        image
       }
-      created
     }
     image
     episode{
       name
       air_date
       episode
-      created
       characters{
         name
       }
     }
-    created
   }
 }
 `;

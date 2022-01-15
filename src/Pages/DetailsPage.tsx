@@ -1,4 +1,6 @@
 import {
+  Avatar,
+  AvatarGroup,
   Box,
   Card,
   CardContent,
@@ -33,13 +35,19 @@ const darkTheme = createTheme({
 });
 const DetailsPage: React.FC = () => {
   const params = useParams();
-  const { loading, data } = useDetails(GET_CHARACTER_DETAILS, params.id);
+  const { loading, error, data } = useDetails(GET_CHARACTER_DETAILS, params.id);
   console.log(data, "data");
-  if (loading || !data) return <></>;
+  if (loading || !data) return <Typography variant="h3" color="#ebebeb">...Loading</Typography>;
+
+  if (error) console.log(error);
 
   const result = data.character;
-
   const episodes_appearance = result.episode.length;
+
+  const tot_residents_in_last_seen = result.location.residents.length;
+  const n = tot_residents_in_last_seen > 4 ? 4 : tot_residents_in_last_seen
+  const residents_of_last_location = result.location.residents.filter(x => x.name !== result.name).slice(0, n);
+  console.log(residents_of_last_location);
   return (
     <ThemeProvider theme={darkTheme}>
       <Container maxWidth="lg">
@@ -50,7 +58,11 @@ const DetailsPage: React.FC = () => {
             marginTop: "1em",
           }}
         >
-          <Grid container direction="row" sx={{justifyContent: "space-between"}}>
+          <Grid
+            container
+            direction="row"
+            sx={{ justifyContent: "space-between" }}
+          >
             <Grid item sm={6}>
               <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <CardContent sx={{ flex: "1 0 auto" }}>
@@ -63,30 +75,51 @@ const DetailsPage: React.FC = () => {
                     color="text.secondary"
                     component="div"
                   >
-                    <span><Circle color="success"/></span>
-                    Status: {result.status}
+                    <span style={{ marginRight: "12px" }}>
+                      <Circle
+                        color={result.status === "Alive" ? "success" : "error"}
+                        sx={{ width: "10px", verticalAlign: "top" }}
+                      />
+                    </span>
+                    Status: {result.status} - {result.gender} - {result.species}
                   </Typography>
                   <Typography
                     variant="subtitle1"
                     color="text.secondary"
                     component="div"
                   >
-                   Gender: {result.gender}
+                    Appeared in {episodes_appearance} episodes
                   </Typography>
                   <Typography
                     variant="subtitle1"
                     color="text.secondary"
                     component="div"
                   >
-                    Species: {result.species}
+                    Origin {result.origin.name} type {result.origin.type}
                   </Typography>
                   <Typography
                     variant="subtitle1"
                     color="text.secondary"
                     component="div"
                   >
-                   Appeared in {episodes_appearance} episodes
+                    Last seen in {result.location.name} in{" "}
+                    {result.location.dimension} dimension.
                   </Typography>
+                  <Typography
+                    variant="subtitle1"
+                    color="text.secondary"
+                    component="div"
+                  >
+                    Residents in the last seen location:
+                  </Typography>
+                  <AvatarGroup total={tot_residents_in_last_seen} sx={{ justifyContent: "start" }}>
+                    {residents_of_last_location.map(x => <Avatar
+                      alt={x.name}
+                      src={x.image}
+                    />)}
+                  </AvatarGroup>
+
+
 
                 </CardContent>
               </Box>

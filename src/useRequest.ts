@@ -7,6 +7,6 @@ export function useCharacter(gqlQuery: DocumentNode){
 }
 
 export function useDetails(gqlQuery: DocumentNode, id: string | undefined){
-  const result = useQuery<{character: Charachter}>(gqlQuery, { variables: { id: id } });
+  const result = useQuery<{character: Charachter}>(gqlQuery, { variables: { id: id }, errorPolicy: "all" });
   return result;
 }

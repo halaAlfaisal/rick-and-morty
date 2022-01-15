@@ -17,8 +17,8 @@ type Charachter = {
   species: string;
   type: string;
   gender: string;
-  origin: Location;
-  location: Location;
+  origin: PhysicalLocation;
+  location: PhysicalLocation;
   image: string;
   episode: Episode[];
   created: string;
@@ -33,7 +33,7 @@ type Episode = {
   characters: Charachter[];
 };
 
-type Location = {
+type PhysicalLocation = {
   id: string;
   name: String;
   type: String;
