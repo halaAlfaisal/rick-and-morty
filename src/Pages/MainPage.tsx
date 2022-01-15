@@ -5,16 +5,12 @@ import { useCharacter } from "../useRequest";
 import { GET_CHARACTERS } from "../graphql";
 import { Container, Grid } from "@mui/material";
 
-const CharachterList: React.FC<{ characters: MinifiedCharacter[] }> = ({characters}) => (
+const CharachterList: React.FC<{ characters: MinifiedCharacter[] }> = ({ characters }) => (
   <Container maxWidth="lg">
-    <Grid container spacing={1} sx={{justifyContent: "center"}}>
+    <Grid container spacing={1} sx={{ justifyContent: "center" }}>
       {characters.map((character) => (
         <Grid item key={character.name}>
-          <CharacterCard
-            image={character.image}
-            name={character.name}
-            id={character.id}
-          />
+          <CharacterCard image={character.image} name={character.name} id={character.id} />
         </Grid>
       ))}
     </Grid>
